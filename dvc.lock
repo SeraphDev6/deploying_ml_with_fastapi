@@ -1,0 +1,89 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python starter/prep_data.py
+    deps:
+    - path: data/census.csv
+      hash: md5
+      md5: 12c208530a5680c15ae19b34152286dd
+      size: 3518606
+    - path: starter/ml
+      hash: md5
+      md5: fd44de1474bec8527cdf0984d44ab600.dir
+      size: 10338
+      nfiles: 6
+    - path: starter/prep_data.py
+      hash: md5
+      md5: 2488dae798ad2791f683725226ada1b5
+      size: 1204
+    outs:
+    - path: data/preprocessors/encoder.pkl
+      hash: md5
+      md5: f871997acafae6843d7945e7abf41b92
+      size: 4081
+    - path: data/preprocessors/lb.pkl
+      hash: md5
+      md5: e0b3e5dc369ff21b833f4c9bfd11b813
+      size: 447
+    - path: data/preprocessors/scaler.pkl
+      hash: md5
+      md5: 39646d72b2e13dded9cae2635cfddc63
+      size: 1303
+    - path: data/test/X.csv
+      hash: md5
+      md5: 42632d78cff1a530857991f8d166790f
+      size: 17426112
+    - path: data/test/y.csv
+      hash: md5
+      md5: 27118da41f87c54cbf32255623f5155c
+      size: 169312
+    - path: data/train/X.csv
+      hash: md5
+      md5: 07be4f33253a3cdfab4df9a9f89fb62b
+      size: 69661632
+    - path: data/train/y.csv
+      hash: md5
+      md5: 08207f319bc2a00b80199722ffe535ce
+      size: 676832
+  train:
+    cmd: python starter/train_model.py
+    deps:
+    - path: data/train/X.csv
+      hash: md5
+      md5: 07be4f33253a3cdfab4df9a9f89fb62b
+      size: 69661632
+    - path: data/train/y.csv
+      hash: md5
+      md5: 08207f319bc2a00b80199722ffe535ce
+      size: 676832
+    params:
+      params.yaml:
+        gridsearch: false
+        tuning:
+          n_estimators: 100
+          max_features: sqrt
+    outs:
+    - path: model/RandomForestClassifier.pkl
+      hash: md5
+      md5: 682b052800ba40c7398abfc9b701d1fc
+      size: 66532377
+  evaluate:
+    cmd: python starter/eval_model.py
+    deps:
+    - path: data/test/X.csv
+      hash: md5
+      md5: 42632d78cff1a530857991f8d166790f
+      size: 17426112
+    - path: data/test/y.csv
+      hash: md5
+      md5: 27118da41f87c54cbf32255623f5155c
+      size: 169312
+    - path: model/RandomForestClassifier.pkl
+      hash: md5
+      md5: 682b052800ba40c7398abfc9b701d1fc
+      size: 66532377
+    outs:
+    - path: model/eval.json
+      hash: md5
+      md5: 766fc421883589cded8f736cd6d878bc
+      size: 92
