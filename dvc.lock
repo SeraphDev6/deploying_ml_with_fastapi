@@ -54,8 +54,8 @@ stages:
       size: 3518606
     - path: starter/ml
       hash: md5
-      md5: fd44de1474bec8527cdf0984d44ab600.dir
-      size: 10338
+      md5: 85be91c034316c4273d70649c852bd4b.dir
+      size: 11261
       nfiles: 6
     - path: starter/prep_data.py
       hash: md5
@@ -64,71 +64,79 @@ stages:
     outs:
     - path: data/preprocessors/encoder.pkl
       hash: md5
-      md5: f871997acafae6843d7945e7abf41b92
-      size: 4081
+      md5: 2bbd31972502af530415c2384dd8eb3c
+      size: 4106
     - path: data/preprocessors/lb.pkl
       hash: md5
       md5: e0b3e5dc369ff21b833f4c9bfd11b813
       size: 447
     - path: data/preprocessors/scaler.pkl
       hash: md5
-      md5: 32046618a35c71c362cde80faf6699f9
+      md5: 1ee3990dc053fcd5e406f20a7d4dbadb
       size: 1303
     - path: data/test/X.csv
       hash: md5
-      md5: 4698e6d101dcbd6c84842225dee17d34
-      size: 17428788
+      md5: a54287d14aa81269fc321aabf05b21d1
+      size: 17591613
     - path: data/test/y.csv
       hash: md5
-      md5: a7c4f2edc8f725041c2b7b3b4e338945
+      md5: 683793dfe5fd413044c6d5b4a45139c5
       size: 169338
     - path: data/train/X.csv
       hash: md5
-      md5: ff6e53db29e368cbf0bdc11b8dcd90c5
-      size: 69664308
+      md5: 8a7397e28423c98ea97472a7ddb22620
+      size: 70309731
     - path: data/train/y.csv
       hash: md5
-      md5: c8109f194509275cb1974abf56bde394
-      size: 676858
+      md5: 8aa22eb65f678267bd0ba6c373faff61
+      size: 676806
   train:
     cmd: python starter/train_model.py
     deps:
     - path: data/train/X.csv
       hash: md5
-      md5: ff6e53db29e368cbf0bdc11b8dcd90c5
-      size: 69664308
+      md5: 8a7397e28423c98ea97472a7ddb22620
+      size: 70309731
     - path: data/train/y.csv
       hash: md5
-      md5: c8109f194509275cb1974abf56bde394
-      size: 676858
+      md5: 8aa22eb65f678267bd0ba6c373faff61
+      size: 676806
     params:
       params.yaml:
         gridsearch: false
+        model: NeuralNetwork
         tuning:
-          n_estimators: 100
-          max_features: sqrt
+          hidden_layer_sizes:
+          - 32
+          - 64
+          - 32
+          activation: relu
+          early_stopping: true
     outs:
-    - path: model/RandomForestClassifier.pkl
+    - path: model/NeuralNetwork.pkl
       hash: md5
-      md5: 2b0a56be772297ecccb0013efb5b0851
-      size: 65756505
+      md5: a1636f75f942e8b09859902dbdfbb1d7
+      size: 191770
   evaluate:
     cmd: python starter/eval_model.py
     deps:
     - path: data/test/X.csv
       hash: md5
-      md5: 4698e6d101dcbd6c84842225dee17d34
-      size: 17428788
+      md5: a54287d14aa81269fc321aabf05b21d1
+      size: 17591613
     - path: data/test/y.csv
       hash: md5
-      md5: a7c4f2edc8f725041c2b7b3b4e338945
+      md5: 683793dfe5fd413044c6d5b4a45139c5
       size: 169338
-    - path: model/RandomForestClassifier.pkl
+    - path: model/NeuralNetwork.pkl
       hash: md5
-      md5: 2b0a56be772297ecccb0013efb5b0851
-      size: 65756505
+      md5: a1636f75f942e8b09859902dbdfbb1d7
+      size: 191770
+    params:
+      params.yaml:
+        model: NeuralNetwork
     outs:
     - path: model/eval.json
       hash: md5
-      md5: e99031e3884216436d697d76db809778
-      size: 92
+      md5: d6407bdf7526c57d8825a32e2927b068
+      size: 118

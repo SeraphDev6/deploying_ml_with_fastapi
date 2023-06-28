@@ -21,14 +21,17 @@ stages:
     params:
       - tuning
       - gridsearch
+      - model
     outs:
-      - model/RandomForestClassifier.pkl
+      - model/${model}.pkl
   evaluate:
     cmd: python starter/eval_model.py
     deps:
-      - model/RandomForestClassifier.pkl
+      - model/${model}.pkl
       - data/test/X.csv
       - data/test/y.csv
+    params:
+      - model
     metrics:
       - model/eval.json:
           cache: false

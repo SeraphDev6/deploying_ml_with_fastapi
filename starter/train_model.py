@@ -13,6 +13,8 @@ X_train = np.loadtxt("data/train/X.csv")
 y_train = np.loadtxt("data/train/y.csv")
 
 # Train and save a model.
-model = train_model(X_train,y_train,params=params["tuning"], gridsearch=params["gridsearch"])
+model = train_model(X_train,y_train,params=params["tuning"],
+                     gridsearch=params["gridsearch"],
+                     model_name= params["model"])
 
-dump(model,"model/RandomForestClassifier.pkl")
+dump(model,f"model/{params['model']}.pkl")

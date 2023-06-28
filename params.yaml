@@ -1,5 +1,11 @@
-tuning:
-  n_estimators: 100
-  max_features: "sqrt"
+tuning: 
+  hidden_layer_sizes:
+    - 32
+    - 64
+    - 32
+  activation: relu
+  early_stopping: false
   
 gridsearch: False
+
+model: NeuralNetwork

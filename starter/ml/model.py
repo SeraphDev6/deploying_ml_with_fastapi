@@ -1,8 +1,18 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import GridSearchCV
-# Optional: implement hyperparameter tuning.
-def train_model(X_train, y_train, params = {}, gridsearch = False):
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+
+models = {
+    "RandomForestClassifier": RandomForestClassifier,
+    "NeuralNetwork": MLPClassifier,
+    "GaussianNB": GaussianNB,
+    "KNeighborsClassifier": KNeighborsClassifier
+}
+
+def train_model(X_train, y_train, model_name, params = {}, gridsearch = False ):
     """
     Trains a machine learning model and returns it.
 
@@ -12,6 +22,12 @@ def train_model(X_train, y_train, params = {}, gridsearch = False):
         Training data.
     y_train : np.array
         Labels.
+    model_name : str
+        Name of model that you want to train, should be one of the following:
+            RandomForestClassifier
+            NeuralNetwork
+            GaussianNB
+            KNeighborsClassifier
     params: dict
         A dictionary of keyword arguments to pass to the model, or a param grid if
         gridsearch is True (default={})
@@ -22,10 +38,11 @@ def train_model(X_train, y_train, params = {}, gridsearch = False):
     model
         Trained machine learning model.
     """
+    model = models[model_name]
     if not gridsearch:
-        rf = RandomForestClassifier(**params)
+        rf = model(**params)
         return rf.fit(X_train,y_train)
-    cv = GridSearchCV(RandomForestClassifier(), params)
+    cv = GridSearchCV(model(), params)
     cv.fit(X_train,y_train)
     return cv.best_estimator_
 
