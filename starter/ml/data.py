@@ -1,9 +1,8 @@
 import numpy as np
-from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
-
+from sklearn.preprocessing import LabelBinarizer, OneHotEncoder, MinMaxScaler
 
 def process_data(
-    X, categorical_features=[], label=None, training=True, encoder=None, lb=None
+    X, categorical_features=[], label=None, training=True, encoder=None, lb=None, scaler = None
 ):
     """ Process the data used in the machine learning pipeline.
 
@@ -29,7 +28,8 @@ def process_data(
         Trained sklearn OneHotEncoder, only used if training=False.
     lb : sklearn.preprocessing._label.LabelBinarizer
         Trained sklearn LabelBinarizer, only used if training=False.
-
+    scaler: sklearn.preprocessing.MinMaxScaler
+        Trained sklearn MinMaxScaler, only used if training=False.
     Returns
     -------
     X : np.array
@@ -42,8 +42,12 @@ def process_data(
     lb : sklearn.preprocessing._label.LabelBinarizer
         Trained LabelBinarizer if training is True, otherwise returns the binarizer
         passed in.
+    scaler: sklearn.preprocessing.MinMaxScaler
+        Trained MinMaxScaler if training is True, otherwise returns the scaler
+        passed in.
     """
-
+    # Drops the 24 duplicates seen in eda.ipynb
+    X = X.copy().drop_duplicates()
     if label is not None:
         y = X[label]
         X = X.drop([label], axis=1)
@@ -56,10 +60,13 @@ def process_data(
     if training is True:
         encoder = OneHotEncoder(sparse=False, handle_unknown="ignore")
         lb = LabelBinarizer()
+        scaler = MinMaxScaler()
         X_categorical = encoder.fit_transform(X_categorical)
+        X_continuous = scaler.fit_transform(X_continuous)
         y = lb.fit_transform(y.values).ravel()
     else:
         X_categorical = encoder.transform(X_categorical)
+        scaler.transform(X_continuous)
         try:
             y = lb.transform(y.values).ravel()
         # Catch the case where y is None because we're doing inference.
@@ -67,4 +74,4 @@ def process_data(
             pass
 
     X = np.concatenate([X_continuous, X_categorical], axis=1)
-    return X, y, encoder, lb
+    return X, y, encoder, lb, scaler

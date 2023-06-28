@@ -1,0 +1,15 @@
+stages:
+  prepare:
+    cmd: python starter/prep_data.py
+    deps:
+      - data/census.csv
+      - starter/ml
+      - starter/prep_data.py
+    outs:
+      - data/train/X.csv
+      - data/train/y.csv
+      - data/test/X.csv
+      - data/test/y.csv
+      - data/preprocessors/encoder.pkl
+      - data/preprocessors/lb.pkl
+      - data/preprocessors/scaler.pkl
