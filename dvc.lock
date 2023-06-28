@@ -56,6 +56,10 @@ stages:
       hash: md5
       md5: 08207f319bc2a00b80199722ffe535ce
       size: 676832
+    - path: starter/train_model.py
+      hash: md5
+      md5: 56d52a75b2ad68215f31c824078337e7
+      size: 541
     params:
       params.yaml:
         gridsearch: false
@@ -65,8 +69,8 @@ stages:
     outs:
     - path: model/RandomForestClassifier.pkl
       hash: md5
-      md5: 682b052800ba40c7398abfc9b701d1fc
-      size: 66532377
+      md5: 40849216d157f28444a31a0a5fe9402b
+      size: 66465129
   evaluate:
     cmd: python starter/eval_model.py
     deps:
@@ -80,10 +84,14 @@ stages:
       size: 169312
     - path: model/RandomForestClassifier.pkl
       hash: md5
-      md5: 682b052800ba40c7398abfc9b701d1fc
-      size: 66532377
+      md5: 40849216d157f28444a31a0a5fe9402b
+      size: 66465129
+    - path: starter/eval_model.py
+      hash: md5
+      md5: c64fe8f10f0ef122912e1e0eae8b58f6
+      size: 462
     outs:
     - path: model/eval.json
       hash: md5
-      md5: 766fc421883589cded8f736cd6d878bc
-      size: 92
+      md5: c50e9d3c36189a2eee58c8a1cac5fd1f
+      size: 90

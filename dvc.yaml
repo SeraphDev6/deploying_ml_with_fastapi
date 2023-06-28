@@ -18,6 +18,7 @@ stages:
     deps:
       - data/train/X.csv
       - data/train/y.csv
+      - starter/train_model.py
     params:
       - tuning
       - gridsearch
@@ -29,6 +30,7 @@ stages:
       - model/RandomForestClassifier.pkl
       - data/test/X.csv
       - data/test/y.csv
+      - starter/eval_model.py
     metrics:
       - model/eval.json:
           cache: false
