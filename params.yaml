@@ -1,11 +1,21 @@
-tuning: 
-  hidden_layer_sizes:
-    - 32
-    - 64
-    - 32
-  activation: relu
-  early_stopping: false
+tuning:
+  n_estimators: 
+    - 50
+    - 100
+    - 150
+    - 200
+  max_features:
+    - sqrt
+    - log2
+    - 0.99
+    - 0.75
+  criterion:
+    - gini
+    - entropy
+    - log_loss
+  class_weight:
+    - balanced
   
-gridsearch: False
+gridsearch: true
 
-model: NeuralNetwork
+model: RandomForestClassifier

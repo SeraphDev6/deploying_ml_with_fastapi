@@ -1,1 +1,1 @@
-{"model": "NeuralNetwork", "results": {"precision": 0.23552894211576847, "recall": 1.0, "fbeta": 0.38126009693053314}}
+{"model": "RandomForestClassifier", "results": {"precision": 0.6439716312056738, "recall": 0.29595827900912647, "fbeta": 0.40553818669048686}}

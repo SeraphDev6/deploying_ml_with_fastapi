@@ -103,20 +103,30 @@ stages:
       size: 676806
     params:
       params.yaml:
-        gridsearch: false
-        model: NeuralNetwork
+        gridsearch: true
+        model: RandomForestClassifier
         tuning:
-          hidden_layer_sizes:
-          - 32
-          - 64
-          - 32
-          activation: relu
-          early_stopping: true
+          n_estimators:
+          - 50
+          - 100
+          - 150
+          - 200
+          max_features:
+          - sqrt
+          - log2
+          - 0.99
+          - 0.75
+          criterion:
+          - gini
+          - entropy
+          - log_loss
+          class_weight:
+          - balanced
     outs:
-    - path: model/NeuralNetwork.pkl
+    - path: model/RandomForestClassifier.pkl
       hash: md5
-      md5: a1636f75f942e8b09859902dbdfbb1d7
-      size: 191770
+      md5: 9440acb4b679b8592c358fa29cbbf9c9
+      size: 59691113
   evaluate:
     cmd: python starter/eval_model.py
     deps:
@@ -128,15 +138,15 @@ stages:
       hash: md5
       md5: 683793dfe5fd413044c6d5b4a45139c5
       size: 169338
-    - path: model/NeuralNetwork.pkl
+    - path: model/RandomForestClassifier.pkl
       hash: md5
-      md5: a1636f75f942e8b09859902dbdfbb1d7
-      size: 191770
+      md5: 9440acb4b679b8592c358fa29cbbf9c9
+      size: 59691113
     params:
       params.yaml:
-        model: NeuralNetwork
+        model: RandomForestClassifier
     outs:
     - path: model/eval.json
       hash: md5
-      md5: d6407bdf7526c57d8825a32e2927b068
-      size: 118
+      md5: 1ffcd5cbbe39d04d6e1d274faad58644
+      size: 142

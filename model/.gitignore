@@ -2,3 +2,5 @@
 /RandomForestClassifier.pkl
 /eval.json
 /NeuralNetwork.pkl
+/KNeighborsClassifier.pkl
+/GaussianNB.pkl
