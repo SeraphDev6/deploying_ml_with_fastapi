@@ -1,0 +1,9 @@
+[flake8]
+extend-ignore=F403
+per-file-ignores = 
+    api/controllers/index.py:E501
+    **/__init__.py:F401
+    main.py:F401
+exclude =
+    __pycache__
+    sanitycheck.py

@@ -5,23 +5,15 @@ import pandas as pd
 import numpy as np
 from joblib import dump
 from sklearn.model_selection import train_test_split
-
 from ml import process_data
+from ml.helpers import load_params, cat_features
 
+
+params = load_params()
 data = pd.read_csv("data/census.csv")
-# Optional enhancement, use K-fold cross validation instead of a train-test split.
 train, test = train_test_split(data, test_size=0.20)
 
-cat_features = [
-    "workclass",
-    "education",
-    "marital-status",
-    "occupation",
-    "relationship",
-    "race",
-    "sex",
-    "native-country",
-]
+
 X_train, y_train, encoder, lb, scaler = process_data(
     train, categorical_features=cat_features, label="salary", training=True
 )

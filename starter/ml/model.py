@@ -12,7 +12,9 @@ models = {
     "KNeighborsClassifier": KNeighborsClassifier
 }
 
-def train_model(X_train, y_train, model_name, params = {}, gridsearch = False ):
+
+def train_model(X_train, y_train, model_name,
+                params={}, gridsearch=False):
     """
     Trains a machine learning model and returns it.
 
@@ -29,8 +31,8 @@ def train_model(X_train, y_train, model_name, params = {}, gridsearch = False ):
             GaussianNB
             KNeighborsClassifier
     params: dict
-        A dictionary of keyword arguments to pass to the model, or a param grid if
-        gridsearch is True (default={})
+        A dictionary of keyword arguments to pass to the model,
+        or a param grid if gridsearch is True (default={})
     gridsearch: bool
         A boolean indicating whether or not to use GridSearchCV (default=False)
     Returns
@@ -41,14 +43,16 @@ def train_model(X_train, y_train, model_name, params = {}, gridsearch = False ):
     model = models[model_name]
     if not gridsearch:
         rf = model(**params)
-        return rf.fit(X_train,y_train)
+        return rf.fit(X_train, y_train)
     cv = GridSearchCV(model(), params)
-    cv.fit(X_train,y_train)
+    cv.fit(X_train, y_train)
     return cv.best_estimator_
+
 
 def compute_model_metrics(y, preds):
     """
-    Validates the trained machine learning model using precision, recall, and F1.
+    Validates the trained machine learning model
+    using precision, recall, and F1.
 
     Inputs
     ------
@@ -82,5 +86,26 @@ def inference(model, X):
     preds : np.array
         Predictions from the model.
     """
-    
+
     return model.predict(X)
+
+
+def compute_metrics_from_model(model, X, y):
+    """ Run model inferences and return the model metrics
+
+    Inputs
+    ------
+    model : ???
+        Trained machine learning model.
+    X : np.array
+        Data used for prediction.
+    y: np.array
+        Known labels, binarized
+
+    Returns
+    -------
+    precision : float
+    recall : float
+    fbeta : float
+    """
+    return compute_model_metrics(y, model.predict(X))

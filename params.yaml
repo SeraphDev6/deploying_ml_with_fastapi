@@ -3,18 +3,16 @@ tuning:
     - 50
     - 100
     - 150
-    - 200
   max_features:
     - sqrt
     - log2
-    - 0.99
     - 0.75
-  criterion:
-    - gini
-    - entropy
-    - log_loss
   class_weight:
     - balanced
+  max_depth:
+    - null
+    - 10
+    - 20
   
 gridsearch: true
 

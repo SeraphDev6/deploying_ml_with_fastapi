@@ -18,6 +18,7 @@ stages:
     deps:
       - data/train/X.csv
       - data/train/y.csv
+      - starter/train_model.py
     params:
       - tuning
       - gridsearch
@@ -28,8 +29,11 @@ stages:
     cmd: python starter/eval_model.py
     deps:
       - model/${model}.pkl
+      - data/train/X.csv
+      - data/train/y.csv
       - data/test/X.csv
       - data/test/y.csv
+      - starter/eval_model.py
     params:
       - model
     metrics:
