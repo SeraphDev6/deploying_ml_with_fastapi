@@ -6,7 +6,7 @@ from starter.ml.helpers import load_eval
 
 
 @app.get("/")
-def index():
+async def index():
     model_results = load_eval()
     model = model_results['model']
     metrics = model_results["metrics"]
@@ -22,8 +22,8 @@ def index():
             }
 
 
-@app.post("/slice_metrics", response_model=Prediciton)
-def predict(feature: Column, sort_by: SortBy = SortBy.num_records, order: Order = Order.descending):
+@app.post("/slice_metrics/", response_model=Prediciton)
+async def predict(feature: Column, sort_by: SortBy = SortBy.num_records, order: Order = Order.descending):
     sort_by = sort_by.split(".")
     prediction = assess_slice_performance(feature)
     prediction["values"].sort(reverse=(order == "desc"),
