@@ -1,9 +1,13 @@
+import os
+from fastapi import Request
 from api import app
 from api.helpers import recursive_get
 from starter.ml import assess_slice_performance
 from api.schemas import Prediciton, SortBy, Order, Column
 from starter.ml.helpers import load_eval
-
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 
 @app.get("/")
 async def index():
@@ -29,3 +33,15 @@ async def predict(feature: Column, sort_by: SortBy = SortBy.num_records, order: 
     prediction["values"].sort(reverse=(order == "desc"),
                               key=lambda x: recursive_get(x, sort_by))
     return prediction
+
+app.mount("/static", StaticFiles(directory="starter/reports/templates/images"), name="static")
+templates = Jinja2Templates(directory="starter/reports/templates/")
+
+@app.get("/report/{feature}", response_class=HTMLResponse)
+async def report(request: Request, feature: Column):
+    data = await predict(feature, SortBy.fbeta)
+    
+    return templates.TemplateResponse("report_template.html",
+                                      { "request": request,
+                                          "data": data,
+                                          "file": f"{data['feature']}_chart.png"})

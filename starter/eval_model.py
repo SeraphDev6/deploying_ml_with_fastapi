@@ -3,7 +3,7 @@ from ml.helpers import (load_params,
                         load_test_data,
                         load_model,
                         load_train_data)
-from starter.ml.model import (compute_metrics_from_model,
+from ml.model import (compute_metrics_from_model,
                               compute_model_metrics,
                               inference)
 

@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 from joblib import dump
 from sklearn.model_selection import train_test_split
-from ml import process_data
+from ml.data import process_data
 from ml.helpers import load_params, cat_features
 
 

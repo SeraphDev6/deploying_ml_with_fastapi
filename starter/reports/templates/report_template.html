@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slice Report for {{ feature }}</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        img{
+            width: 70%;
+            height: auto;
+            margin: 20px;
+        }
+        table{
+            width:100%;
+            border-spacing:0;
+            background-color: #ddd;
+        }
+        .main_table{
+            width: 80%;
+            background-color: #aaa;
+        }
+        th,td{
+            border: 1px solid black;
+            text-align: center;
+            height: 100%;
+        }
+        .negative{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Slice Report for {{data['feature'].value }}</h1>
+    <img src="/static/{{data.feature.name}}_chart.png" alt="Variance Chart for {{data['feature'].value }}" />
+    <table class="main_table">
+        <thead>
+            <th>Unique Value</th>
+            <th>Record Count</th>
+            <th></th>
+            <th>Precision</th>
+            <th>Recall</th>
+            <th>f<sub>1</sub> Score</th>
+        </thead>
+        <tbody>
+            {% for val in data['values'] %}
+            <tr>
+                <td>{{val.name}}</td>
+                <td>{{val.num_records}}</td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>Slice Metric</td>
+                        </tr>
+                        <tr>
+                            <td>Compared to Baseline</td>
+                        </tr>
+                    </table>
+                </td>
+                {% for metric in val['metrics'].values() %}
+                <td>
+                    <table> 
+                        {% for i in metric.values() %}
+                        <tr>
+                            <td>
+                               <p {%if i < 0%}class="negative" {%endif%}> {{i}}</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
