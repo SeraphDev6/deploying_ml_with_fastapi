@@ -1,3 +1,4 @@
+import os
 from ml.helpers import load_eval, cat_features
 from reports.report import create_report_inner, create_report_full
 from ml.assessment import assess_slice_performance
@@ -29,5 +30,5 @@ def print_report(features):
         html = create_report_full(inner)
         f.write(html)
 
-
+os.mkdir("starter/reports/templates/images")
 print_report(cat_features)
