@@ -20,8 +20,8 @@ async def index():
                        "which was trained on a set of census data " +
                        "to determine which income bracket an individual falls into."),
         "Model_Metrics": (f"This model currently has a precision score of {metrics['precision']}, " +
-                          "and a recall score of {metrics['recall']}, which gives us an fbeta score of " +
-                          "{metrics['fbeta']} when calculated with a beta of 1"),
+                          f"and a recall score of {metrics['recall']}, which gives us an fbeta score of " +
+                          f"{metrics['fbeta']} when calculated with a beta of 1"),
         "Model_Metrics_Raw": metrics,
             }
 
