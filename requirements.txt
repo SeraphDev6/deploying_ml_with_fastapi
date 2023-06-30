@@ -8,4 +8,4 @@ fastapi
 uvicorn
 jinja2
 dvc
-yaml
+pyyaml
