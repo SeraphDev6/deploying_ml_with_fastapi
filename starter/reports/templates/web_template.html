@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slice Report for {{ feature }}</title>
+    <title>Slice Report for {{ data.feature.value }}</title>
     <style>
         *{
             margin: 0;
@@ -17,7 +17,7 @@
             align-items: center;
         }
         img{
-            width: 70%;
+            width: 90%;
             height: auto;
             margin: 20px;
         }
@@ -27,7 +27,7 @@
             background-color: #ddd;
         }
         .main_table{
-            width: 80%;
+            width: 70%;
             background-color: #aaa;
         }
         th,td{
@@ -41,8 +41,22 @@
     </style>
 </head>
 <body>
-    <h1>Slice Report for {{data['feature'].value }}</h1>
-    <img src="/static/{{data.feature.name}}_chart.png" alt="Variance Chart for {{data['feature'].value }}" />
+    <h1>Web Report for {{ data.feature.value }}</h1>
+    <label for="select">
+        View Report For
+        <select id="select" onchange="
+        location.href = '../report/' +  document.querySelector('#select').value
+        ">
+            {% for option in options %}
+            <option value="{{option}}"
+            {% if option == data.feature.value %}
+            selected
+            {% endif %}
+            >{{option}}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <img src="/static/{{data.feature.value}}_chart.png" alt="Variance Chart for {{data.feature.value }}" />
     <table class="main_table">
         <thead>
             <th>Unique Value</th>

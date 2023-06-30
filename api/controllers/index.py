@@ -39,9 +39,9 @@ templates = Jinja2Templates(directory="starter/reports/templates/")
 
 @app.get("/report/{feature}", response_class=HTMLResponse)
 async def report(request: Request, feature: Column):
-    data = await predict(feature, SortBy.fbeta)
+    data = await predict(feature, SortBy.fbeta, Order.ascending)
     
-    return templates.TemplateResponse("report_template.html",
+    return templates.TemplateResponse("web_template.html",
                                       { "request": request,
                                           "data": data,
-                                          "file": f"{data['feature']}_chart.png"})
+                                          "options": [x.value for x in Column ]})

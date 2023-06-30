@@ -39,3 +39,12 @@ stages:
     metrics:
       - model/eval.json:
           cache: false
+  report:
+    cmd: python starter/build_report.py
+    deps:
+      - model/eval.json
+      - starter/build_report.py
+    outs:
+      - starter/reports/templates/images
+      - starter/reports/slice_report.html
+

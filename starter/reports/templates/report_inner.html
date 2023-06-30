@@ -1,0 +1,43 @@
+<h1>Slice Report for {{data.feature }}</h1>
+<img src="templates/images/{{data.feature}}_chart.png" alt="Variance Chart for {{data.feature }}" />
+<table class="main_table">
+    <thead>
+        <th>Unique Value</th>
+        <th>Record Count</th>
+        <th></th>
+        <th>Precision</th>
+        <th>Recall</th>
+        <th>f<sub>1</sub> Score</th>
+    </thead>
+    <tbody>
+        {% for val in data['values'] %}
+        <tr>
+            <td>{{val.name}}</td>
+            <td>{{val.num_records}}</td>
+            <td>
+                <table>
+                    <tr>
+                        <td>Slice Metric</td>
+                    </tr>
+                    <tr>
+                        <td>Compared to Baseline</td>
+                    </tr>
+                </table>
+            </td>
+            {% for metric in val['metrics'].values() %}
+            <td>
+                <table> 
+                    {% for i in metric.values() %}
+                    <tr>
+                        <td>
+                            <p {%if i < 0%}class="negative" {%endif%}> {{i}}</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
