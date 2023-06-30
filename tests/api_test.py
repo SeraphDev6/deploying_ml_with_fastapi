@@ -34,3 +34,13 @@ def test_invalid_path():
     response = client.get("/not_valid")
     assert response.status_code == 404
     assert response.json() == {"detail": "Not Found"}
+
+
+def test_html_page():
+    for column in cat_features:
+        response = client.get(f"/report/{column}")
+        assert response.status_code == 200
+        assert "html" in response.text
+    response = client.get(f"/report/not_a_column")
+    assert response.status_code == 422
+    

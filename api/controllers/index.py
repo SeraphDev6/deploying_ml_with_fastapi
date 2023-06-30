@@ -2,7 +2,7 @@ import os
 from fastapi import Request
 from api import app
 from api.helpers import recursive_get
-from starter.ml import assess_slice_performance
+from starter.ml.assessment import assess_slice_performance
 from api.schemas import Prediciton, SortBy, Order, Column
 from starter.ml.helpers import load_eval
 from fastapi.responses import HTMLResponse
