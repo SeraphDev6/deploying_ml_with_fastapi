@@ -1,4 +1,3 @@
-import os
 from fastapi import Request
 from api import app
 from api.helpers import recursive_get
@@ -8,6 +7,7 @@ from starter.ml.helpers import load_eval
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
+
 
 @app.get("/")
 async def index():
@@ -37,11 +37,12 @@ async def predict(feature: Column, sort_by: SortBy = SortBy.num_records, order: 
 app.mount("/static", StaticFiles(directory="starter/reports/templates/images"), name="static")
 templates = Jinja2Templates(directory="starter/reports/templates/")
 
+
 @app.get("/report/{feature}", response_class=HTMLResponse)
 async def report(request: Request, feature: Column):
     data = await predict(feature, SortBy.fbeta, Order.ascending)
-    
+
     return templates.TemplateResponse("web_template.html",
-                                      { "request": request,
-                                          "data": data,
-                                          "options": [x.value for x in Column ]})
+                                      {"request": request,
+                                       "data": data,
+                                       "options": [x.value for x in Column]})

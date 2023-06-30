@@ -1,7 +1,7 @@
 # Script to train machine learning model.
 from joblib import dump
 from ml.model import train_model
-from ml.helpers import load_train_data, load_params, load_test_data
+from ml.helpers import load_train_data, load_params
 # Add the necessary imports for the starter code.
 
 

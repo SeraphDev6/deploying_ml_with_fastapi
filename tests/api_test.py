@@ -5,15 +5,17 @@ from main import app
 
 client = TestClient(app)
 
+
 def test_read_index():
     response = client.get("/")
     assert response.status_code == 200
     assert len(response.json()) == 4
     for key in ["Greeting",
-            "Model_Info",
-            "Model_Metrics",
-            "Model_Metrics_Raw"]:
+                "Model_Info",
+                "Model_Metrics",
+                "Model_Metrics_Raw"]:
         assert key in response.json().keys()
+
 
 def test_slice_metrics():
     data = read_csv("data/census.csv")
@@ -30,6 +32,7 @@ def test_slice_metrics():
             assert val["num_records"] >= 0
             assert len(val["metrics"]) == 3
 
+
 def test_invalid_path():
     response = client.get("/not_valid")
     assert response.status_code == 404
@@ -41,6 +44,5 @@ def test_html_page():
         response = client.get(f"/report/{column}")
         assert response.status_code == 200
         assert "html" in response.text
-    response = client.get(f"/report/not_a_column")
+    response = client.get("/report/not_a_column")
     assert response.status_code == 422
-    

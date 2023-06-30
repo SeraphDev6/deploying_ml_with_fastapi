@@ -24,9 +24,11 @@ class Order(str, Enum):
     ascending = "asc"
     descending = "desc"
 
+
 class MetricScore(BaseModel):
     value: float
     vs_baseline: float
+
 
 class Metrics(BaseModel):
     precision: MetricScore

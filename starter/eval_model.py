@@ -4,8 +4,8 @@ from ml.helpers import (load_params,
                         load_model,
                         load_train_data)
 from ml.model import (compute_metrics_from_model,
-                              compute_model_metrics,
-                              inference)
+                      compute_model_metrics,
+                      inference)
 
 params = load_params()
 X_train, y_train = load_train_data()
