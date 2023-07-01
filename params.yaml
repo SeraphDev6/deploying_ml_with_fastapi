@@ -10,7 +10,6 @@ tuning:
   class_weight:
     - balanced
   max_depth:
-    - null
     - 10
     - 20
   

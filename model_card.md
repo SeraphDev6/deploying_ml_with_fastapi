@@ -20,11 +20,16 @@ The evaluation data was the remaining 20% of the aforemention census data held o
 ## Metrics
 The three metrics used to evaluate this model's performance were precision, recall, and an f<sub>1</sub> score. The results of the model on the validation data are as follows:
 
-- Precision: 0.6521106259097526
-- recall: 0.2855321861057999
-- f<sub>1</sub>: 0.3971631205673759
+- Precision: 0.6444444444444445
+- recall: 0.313015873015873
+- f<sub>1</sub>: 0.42136752136752137
 
-It should be noted that the model performed with a perfect score in each of these metrics, leading to the belief that significant overfitting was occuring. More research into solutions to this problem will be investigated in the future.
+It should be noted that the model performed with a significantly improved score in each of these metrics, leading to the belief that significant overfitting was occuring. More research into solutions to this problem will be investigated in the future. The training metrics are as follows:
+
+- Precision: 0.7933631142310147
+- recall: 0.992020427705075
+- f<sub>1</sub>: 0.8816396000283668
+
 
 ## Ethical Considerations
 Given the significant overfitting and disparity in the size of data samples between certain protected characteristics, such as sex, it is not recommended to utilize this model in any real-world application.
