@@ -1,3 +1,4 @@
+# syntax = docker/dockerfile:1.2
 FROM python:3.10-slim-bullseye
 
 ENV PYTHONUNBUFFERED True
