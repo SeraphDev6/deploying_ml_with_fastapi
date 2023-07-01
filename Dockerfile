@@ -10,6 +10,5 @@ RUN apt-get -y install git
 RUN git init
 
 RUN pip install -r requirements.txt
-RUN python -m dvc remote modify drive --local gdrive_user_credentials_file ../google_permissions.json
 RUN python -m dvc pull -r drive
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
