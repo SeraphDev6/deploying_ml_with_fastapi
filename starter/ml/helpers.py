@@ -3,6 +3,9 @@ import yaml
 from numpy import loadtxt
 from yaml import CLoader as Loader
 from json import load as load_json
+from .data import process_data
+from .model import inference
+from pandas import DataFrame
 
 
 def load_params():
@@ -48,3 +51,15 @@ cat_features = [
     "sex",
     "native-country"
     ]
+
+
+def predict_on_raw(raw_df):
+    not_available = raw_df["salary"].isna()
+    raw_df["salary"].fillna("<=50K", inplace=True)
+    X, y, _, _, _ = process_data(raw_df, cat_features, "salary",
+                                 False, *load_processors())
+    output = DataFrame(y, columns=["actual"])
+    output["actual"][not_available] = -1
+    output["predicted"] = inference(load_model(), X)
+    output["correct"] = output["actual"] == output["predicted"]
+    return output

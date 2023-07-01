@@ -11,7 +11,7 @@ def create_chart(values, feature):
     data = DataFrame(map(lambda x: (x['name'],
                                     x['metrics']['fbeta']['value']),
                          values))
-    plt.figure(figsize=(20, 15))
+    plt.figure(figsize=(20, 12))
     plt.rcParams.update({'font.size': 16})
     plt.bar(data[0], data[1], label="slice")
     plt.xlabel(f"{feature} Unique Value")

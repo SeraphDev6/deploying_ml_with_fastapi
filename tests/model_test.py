@@ -24,7 +24,5 @@ def test_metrics():
     assert isinstance(metrics, tuple)
     assert len(metrics) == 3
     baseline = tuple(load_eval()["metrics"].values())
-    print(metrics)
-    print(baseline)
     for i, metric in enumerate(metrics):
         assert abs(metric - baseline[i]) <= 0.05

@@ -2,23 +2,51 @@ from fastapi.testclient import TestClient
 from pandas import read_csv
 from starter.ml.helpers import cat_features
 from main import app
-
+from json import dumps
+from random import choice, choices
 client = TestClient(app)
+data = read_csv("data/census.csv")
+s_filter = data["salary"] == ">50K"
+over_sample = data[s_filter].to_dict(orient="records")
+under_sample = data[~s_filter].to_dict(orient="records")
 
 
 def test_read_index():
     response = client.get("/")
     assert response.status_code == 200
-    assert len(response.json()) == 4
+    assert len(response.json()) == 5
     for key in ["Greeting",
                 "Model_Info",
                 "Model_Metrics",
-                "Model_Metrics_Raw"]:
+                "Model_Metrics_Raw",
+                "Privacy_Notice"]:
         assert key in response.json().keys()
 
 
+def test_predict_one():
+    for sample in [over_sample, under_sample]:
+        responses = []
+        for _ in range(5):
+            response = client.post("/predict_one?save_data=false",
+                                   content=dumps(choice(sample)))
+            assert response.status_code == 200
+            responses.append(response.json())
+        assert all(map(lambda x: len(x) == 3, responses))
+        assert all(map(lambda x: type(x) == dict, responses))
+        corrects = list(map(lambda x: x["correct"], responses))
+        assert any(corrects)
+
+
+def test_predict():
+    for samp in [over_sample, under_sample]:
+        response = client.post("/predict?save_data=false",
+                               content=dumps({"inputs": choices(samp, k=10)}))
+        assert response.status_code == 200
+        assert len(response.json()["results"]) == 10
+        assert any(map(lambda x: x["correct"], response.json()["results"]))
+
+
 def test_slice_metrics():
-    data = read_csv("data/census.csv")
     for column in cat_features:
         response = client.post(f"/slice_metrics?feature={column}",
                                headers={"accept": "application/json"})

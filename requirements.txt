@@ -1,6 +1,6 @@
 numpy
 pandas
-scikit-learn
+scikit-learn==1.2.2
 pytest
 flake8
 requests
@@ -9,4 +9,4 @@ uvicorn
 jinja2
 dvc
 pyyaml
-fsspec
+dvc-gdrive

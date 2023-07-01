@@ -54,8 +54,8 @@ stages:
       size: 3518606
     - path: starter/ml
       hash: md5
-      md5: e58e2c8d9a5bf9cf3b439ae43c0eb213.dir
-      size: 17720
+      md5: b0cbe3c92b1276f5d6d1726fd039982c.dir
+      size: 17639
       nfiles: 10
     - path: starter/prep_data.py
       hash: md5
@@ -72,39 +72,39 @@ stages:
       size: 447
     - path: data/preprocessors/scaler.pkl
       hash: md5
-      md5: 7d955818af55d7548d5ffac32a59f9a0
+      md5: 2944643d15e84b23b66dafe7d17e2e52
       size: 1287
     - path: data/test/X.csv
       hash: md5
-      md5: 242a4cfc657cda05df591fb4a494c999
-      size: 17591613
+      md5: c81b8bc2823f164f4523ebd8cc20a7b0
+      size: 17586211
     - path: data/test/y.csv
       hash: md5
-      md5: 580a6fdc8d274db232835cfd42cd99e2
-      size: 169338
+      md5: 8b40f9dfee1ced01f047296e4f50660d
+      size: 169286
     - path: data/train/X.csv
       hash: md5
-      md5: 7bb2abf466767e31166008e12c955d7f
-      size: 70315133
+      md5: 1c7ff211687fa9bc504737a19229cc37
+      size: 70312432
     - path: data/train/y.csv
       hash: md5
-      md5: 8811c8e83c955a67b4104b348926d7e8
-      size: 676858
+      md5: 11e51253b5d66c14822f9ce5d42b1899
+      size: 676832
   train:
     cmd: python starter/train_model.py
     deps:
     - path: data/train/X.csv
       hash: md5
-      md5: 7bb2abf466767e31166008e12c955d7f
-      size: 70315133
+      md5: 1c7ff211687fa9bc504737a19229cc37
+      size: 70312432
     - path: data/train/y.csv
       hash: md5
-      md5: 8811c8e83c955a67b4104b348926d7e8
-      size: 676858
+      md5: 11e51253b5d66c14822f9ce5d42b1899
+      size: 676832
     - path: starter/train_model.py
       hash: md5
-      md5: 50af552cae45b7fbeaa098b1724ea5f1
-      size: 516
+      md5: 60f489f17c925a97f99f634c3da8c016
+      size: 500
     params:
       params.yaml:
         gridsearch: true
@@ -127,61 +127,61 @@ stages:
     outs:
     - path: model/RandomForestClassifier.pkl
       hash: md5
-      md5: 52b3ec3fbb577486c946954c7048efa7
-      size: 63512137
+      md5: bffb06eefb2ed0a492d0ddf43afb7d0a
+      size: 42254985
   evaluate:
     cmd: python starter/eval_model.py
     deps:
     - path: data/test/X.csv
       hash: md5
-      md5: 242a4cfc657cda05df591fb4a494c999
-      size: 17591613
+      md5: c81b8bc2823f164f4523ebd8cc20a7b0
+      size: 17586211
     - path: data/test/y.csv
       hash: md5
-      md5: 580a6fdc8d274db232835cfd42cd99e2
-      size: 169338
+      md5: 8b40f9dfee1ced01f047296e4f50660d
+      size: 169286
     - path: data/train/X.csv
       hash: md5
-      md5: 7bb2abf466767e31166008e12c955d7f
-      size: 70315133
+      md5: 1c7ff211687fa9bc504737a19229cc37
+      size: 70312432
     - path: data/train/y.csv
       hash: md5
-      md5: 8811c8e83c955a67b4104b348926d7e8
-      size: 676858
+      md5: 11e51253b5d66c14822f9ce5d42b1899
+      size: 676832
     - path: model/RandomForestClassifier.pkl
       hash: md5
-      md5: 52b3ec3fbb577486c946954c7048efa7
-      size: 63512137
+      md5: bffb06eefb2ed0a492d0ddf43afb7d0a
+      size: 42254985
     - path: starter/eval_model.py
       hash: md5
-      md5: f84254f0203da545618bf6694bfceb71
-      size: 849
+      md5: de7e1cde7c14daf40b995f2eb419e55f
+      size: 833
     params:
       params.yaml:
         model: RandomForestClassifier
     outs:
     - path: model/eval.json
       hash: md5
-      md5: 366de5809771f96d6d16f9d3fff23819
-      size: 240
+      md5: 724f9cd622558098d4d9b2adf1f3d781
+      size: 209
   report:
     cmd: python starter/build_report.py
     deps:
     - path: model/eval.json
       hash: md5
-      md5: 366de5809771f96d6d16f9d3fff23819
-      size: 240
+      md5: 724f9cd622558098d4d9b2adf1f3d781
+      size: 209
     - path: starter/build_report.py
       hash: md5
-      md5: 676f3be8052efce55658d3dbe1249e45
-      size: 1400
+      md5: 3a26e323fa27bc2f3d2db6398345981c
+      size: 1452
     outs:
     - path: starter/reports/slice_report.html
       hash: md5
-      md5: 9cad92f96e63aefcc4037da3e910bcaf
-      size: 204437
+      md5: aaf6ea679120b8dab468cda2a25609ab
+      size: 204706
     - path: starter/reports/templates/images
       hash: md5
-      md5: 9188d70fbc5a1fa89666fddafbb9bc19.dir
-      size: 550840
+      md5: 9512eb43a2d5f4772350dc2f752d0e0b.dir
+      size: 513714
       nfiles: 8

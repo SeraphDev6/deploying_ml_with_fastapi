@@ -51,8 +51,6 @@ def process_data(
         Trained MinMaxScaler if training is True,
         otherwise returns the scaler passed in.
     """
-    # Drops the 24 duplicates seen in eda.ipynb
-    X = X.copy().drop_duplicates()
     if label is not None:
         y = X[label]
         X = X.drop([label], axis=1)
