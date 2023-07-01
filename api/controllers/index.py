@@ -38,14 +38,16 @@ async def index():
 
 
 @app.post("/predict_one", response_model=Output)
-def predict_one(input: Input, save_data: bool = True):
+async def predict_one(input: Input,
+                      save_data: bool = True):
     df = input.to_df()
     results = predict_on_raw(df)
     return process_input(df, results, save_data)[0]
 
 
 @app.post("/predict", response_model=ListOutput)
-def predict_many(input: MassInput, save_data: bool = True):
+async def predict_many(input: MassInput,
+                       save_data: bool = True):
     df = input.to_df()
     results = predict_on_raw(df)
     return {"results": process_input(df, results, save_data)}
