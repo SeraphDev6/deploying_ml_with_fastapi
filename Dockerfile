@@ -10,7 +10,7 @@ WORKDIR $APP_HOME
 
 RUN git clone https://github.com/SeraphDev6/deploying_ml_with_fastapi.git .
 RUN pip install -r requirements.txt
-RUN python -m dvc remote modify storage --local gdrive_user_credentials_file ${AUTH_PATH}
+RUN python -m dvc remote modify drive --local gdrive_user_credentials_file ${AUTH_PATH}
 
 RUN python -m dvc pull -r drive
 
