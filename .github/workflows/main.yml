@@ -28,7 +28,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi 
     - name: DVC pull
       env: 
-        GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDS }}
+        GDRIVE_CREDENTIALS_DATA: '${{ secrets.GDRIVE_CREDS }}'
       run: |
         dvc pull -r drive
     - name: Lint with flake8
