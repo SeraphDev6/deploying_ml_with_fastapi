@@ -26,6 +26,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest flake8
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi 
+    - name: Update DVC Creds and pull
+      run: |
+        dvc remote modify --local myremote \
+                    gdrive_service_account_json_file_path \
+                    ${{ GOOGLE_GHA_CREDS_PATH }}
         dvc pull
     - name: Lint with flake8
       run: |
