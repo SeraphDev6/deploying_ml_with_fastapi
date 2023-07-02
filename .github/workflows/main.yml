@@ -13,11 +13,10 @@ jobs:
     steps:
     - name: Checkout-code
       uses: actions/checkout@v2 
-    - name: Set up Google Drive credentials
-        uses: google-github-actions/setup-gcloud@master
-        with:
-          version: 'latest'
-          service_account_key: ${{ secrets.GDRIVE_CREDS }}
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v1.1.1
+      with:
+        credentials_json: ${{ secrets.GDRIVE_CREDS }}
     - name: Set up Python 3.10.12
       uses: actions/setup-python@v2
       with:
