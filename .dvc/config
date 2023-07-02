@@ -2,5 +2,3 @@
     remote = drive
 ['remote "drive"']
     url = gdrive://1du4YdBMHk20NAhaexuJRKsk1nNzzToat
-    gdrive_use_service_account = true
-    gdrive_service_account_user_email = 'docker-for-dvc@pragmatic-lead-331601.iam.gserviceaccount.com'
