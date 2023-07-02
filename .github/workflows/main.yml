@@ -28,7 +28,8 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi 
     - name: Update DVC Creds and pull
       run: |
-        echo ${{ secrets.GDRIVE_CREDS }} > ./screts.json
+        touch ./secrets.json
+        echo ${{ secrets.GDRIVE_CREDS }} > ./secrets.json
         dvc remote modify --local drive \
                     gdrive_service_account_json_file_path \
                     ./secrets.json
