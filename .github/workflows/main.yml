@@ -30,7 +30,7 @@ jobs:
       run: |
         dvc remote modify --local drive \
                     gdrive_service_account_json_file_path \
-                    ${ GOOGLE_GHA_CREDS_PATH }
+                    $GOOGLE_GHA_CREDS_PATH
         dvc pull
     - name: Lint with flake8
       run: |
