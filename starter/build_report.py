@@ -47,9 +47,9 @@ def print_simple_report(features):
             for name, metric in val['metrics'].items():
                 text += f"\t\t- {name}: {metric['value']}\n"
 
-        
     with open("starter/reports/slice_output.txt", "w") as f:
         f.write(text)
+
 
 if __name__ == "__main__":
     if os.environ["SIMPLE"]:
