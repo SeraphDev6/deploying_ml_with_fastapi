@@ -10,6 +10,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env: 
+      GDRIVE_CREDENTIALS_DATA: '${{ secrets.GDRIVE_CREDS }}'
     steps:
     - name: Checkout-code
       uses: actions/checkout@v2 
@@ -28,13 +30,9 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi 
     - name: setup DVC
       uses: iterative/setup-dvc@v1
-      env: 
-        GDRIVE_CREDENTIALS_DATA: '${{ secrets.GDRIVE_CREDS }}'
     - name: DVC pull
       run: |
         dvc pull -r drive
-      env: 
-        GDRIVE_CREDENTIALS_DATA: '${{ secrets.GDRIVE_CREDS }}'
     - name: Lint with flake8
       run: |
         flake8 .
