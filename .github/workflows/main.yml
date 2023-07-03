@@ -28,11 +28,11 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
-#     - name: setup DVC
-#       uses: iterative/setup-dvc@v1
-#     - name: DVC pull
-#       run: |
-#         dvc pull -r drive
+    - name: setup DVC
+      uses: iterative/setup-dvc@v1
+    - name: DVC pull
+      run: |
+        dvc pull -r s3
     - name: Lint with flake8
       run: |
         flake8 .
