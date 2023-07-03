@@ -26,7 +26,7 @@ def test_read_index():
 def test_predict_one():
     for sample in [over_sample, under_sample]:
         responses = []
-        for _ in range(5):
+        for _ in range(10):
             response = client.post("/predict_one?save_data=false",
                                    content=dumps(choice(sample)))
             assert response.status_code == 200
