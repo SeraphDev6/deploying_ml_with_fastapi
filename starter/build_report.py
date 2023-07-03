@@ -37,5 +37,23 @@ def print_report(features):
         f.write(html)
 
 
-os.mkdir("starter/reports/templates/images")
-print_report(cat_features)
+def print_simple_report(features):
+    text = ""
+    for feature in features:
+        prediction = assess_slice_performance(feature)
+        text += f"Feature: {prediction['feature']}\n"
+        for val in prediction['values']:
+            text += f"\t- {val['name']}\n"
+            for name, metric in val['metrics'].items():
+                text += f"\t\t- {name}: {metric['value']}\n"
+
+        
+    with open("starter/reports/slice_output.txt", "w") as f:
+        f.write(text)
+
+if __name__ == "__main__":
+    if os.environ["SIMPLE"]:
+        print_simple_report(cat_features)
+    else:
+        os.mkdir("starter/reports/templates/images")
+        print_report(cat_features)
