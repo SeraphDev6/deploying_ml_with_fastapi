@@ -1,7 +1,9 @@
 [core]
-    remote = drive
+    remote = s3
 ['remote "drive"']
     url = gdrive://1du4YdBMHk20NAhaexuJRKsk1nNzzToat
     gdrive_use_service_account = true
     gdrive_service_account_json_file_path = /dev/null
     gdrive_acknowledge_abuse = true
+['remote "s3"']
+    url = s3://dvc.bucket

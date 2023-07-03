@@ -9,4 +9,5 @@ uvicorn
 jinja2
 dvc
 pyyaml
-dvc-gdrive
+dvc-s3
+httpx
