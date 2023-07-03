@@ -24,6 +24,7 @@ def test_read_index():
 
 
 def test_predict_one():
+    # Look how this tests both posibilities
     for sample in [over_sample, under_sample]:
         responses = []
         for _ in range(10):
@@ -38,6 +39,7 @@ def test_predict_one():
 
 
 def test_predict():
+    # Look how this tests both posibilities
     for samp in [over_sample, under_sample]:
         response = client.post("/predict?save_data=false",
                                content=dumps({"inputs": choices(samp, k=10)}))
