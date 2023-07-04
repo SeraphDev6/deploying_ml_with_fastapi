@@ -23,29 +23,54 @@ def test_read_index():
         assert key in response.json().keys()
 
 
-def test_predict_one():
-    # Look how this tests both posibilities
-    for sample in [over_sample, under_sample]:
-        responses = []
-        for _ in range(10):
-            response = client.post("/predict_one?save_data=false",
-                                   content=dumps(choice(sample)))
-            assert response.status_code == 200
-            responses.append(response.json())
-        assert all(map(lambda x: len(x) == 3, responses))
-        assert all(map(lambda x: type(x) == dict, responses))
-        corrects = list(map(lambda x: x["correct"], responses))
-        assert any(corrects)
-
-
-def test_predict():
-    # Look how this tests both posibilities
-    for samp in [over_sample, under_sample]:
-        response = client.post("/predict?save_data=false",
-                               content=dumps({"inputs": choices(samp, k=10)}))
+def test_predict_one_over_50k():
+    responses = []
+    for _ in range(10):
+        response = client.post("/predict_one?save_data=false",
+                               content=dumps(choice(over_sample)))
         assert response.status_code == 200
-        assert len(response.json()["results"]) == 10
-        assert any(map(lambda x: x["correct"], response.json()["results"]))
+        responses.append(response.json())
+    assert all(map(lambda x: len(x) == 3, responses))
+    assert all(map(lambda x: type(x) == dict, responses))
+    assert any(map(lambda x: x["predicted"] == ">50K", responses))
+    corrects = list(map(lambda x: x["correct"], responses))
+    assert any(corrects)
+
+
+def test_predict_one_under_50k():
+    responses = []
+    for _ in range(10):
+        response = client.post("/predict_one?save_data=false",
+                               content=dumps(choice(under_sample)))
+        assert response.status_code == 200
+        responses.append(response.json())
+    assert all(map(lambda x: len(x) == 3, responses))
+    assert all(map(lambda x: type(x) == dict, responses))
+    assert any(map(lambda x: x["predicted"] == "<=50K", responses))
+    corrects = list(map(lambda x: x["correct"], responses))
+    assert any(corrects)
+
+
+def test_predict_over_50k():
+    response = client.post("/predict?save_data=false",
+                           content=dumps({"inputs":
+                                          choices(over_sample, k=10)}))
+    assert response.status_code == 200
+    assert len(response.json()["results"]) == 10
+    assert any(map(lambda x: x["predicted"] == ">50K",
+                   response.json()["results"]))
+    assert any(map(lambda x: x["correct"], response.json()["results"]))
+
+
+def test_predict_under_50k():
+    response = client.post("/predict?save_data=false",
+                           content=dumps({"inputs":
+                                          choices(under_sample, k=10)}))
+    assert response.status_code == 200
+    assert len(response.json()["results"]) == 10
+    assert any(map(lambda x: x["predicted"] == "<=50K",
+                   response.json()["results"]))
+    assert any(map(lambda x: x["correct"], response.json()["results"]))
 
 
 def test_slice_metrics():
